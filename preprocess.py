@@ -19,6 +19,7 @@ from captioner import utils
 from captioner.data.dictionary import Dictionary
 from captioner.data.dataset import ImageDataset
 
+nltk.download('punkt')
 
 def get_args():
     parser = argparse.ArgumentParser('Data pre-processing')
@@ -95,7 +96,7 @@ def build_dictionary(caption_files, tokenize):
         coco = COCO(filename)
         progress_bar = tqdm(coco.anns.values(), desc='| Build Dictionary', leave=False)
         for annotation in progress_bar:
-            tokens = tokenize(annotations['caption'].lower())
+            tokens = tokenize(annotation['caption'].lower())
             for word in tokens:
                 dictionary.add_word(word)
             dictionary.add_word(dictionary.eos_word)
